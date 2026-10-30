@@ -14,5 +14,15 @@ def build_tools():
     from tools.calculator import Calculator
     from tools.data_query import ListFiles, ReadFile, SqlQuery
     from tools.web_search import WebSearch
-    tools = [ListFiles(), ReadFile(), SqlQuery(), Calculator(), WebSearch()]
+    from tools.campus_disruption import ScanCampusDisruptions, SolveCampusRecovery
+
+    tools = [
+        ListFiles(),
+        ReadFile(),
+        SqlQuery(),
+        Calculator(),
+        WebSearch(),
+        ScanCampusDisruptions(),
+        SolveCampusRecovery()
+    ]
     return {t.name: t for t in tools}

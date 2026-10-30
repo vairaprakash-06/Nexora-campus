@@ -72,6 +72,19 @@ class DryRunLLM:
 
     def generate(self, system, messages):
         self.step += 1
+        last_msg = messages[-1]["content"] if messages else ""
+        query = messages[0]["content"] if messages else ""
+
+        is_campus_query = any(k in query.lower() for k in ["lab", "room", "disrupt", "unavailable", "fail", "equipment", "timetable", "schedule"])
+
+        if is_campus_query:
+            if self.step == 1:
+                return '{"thought": "Scan the campus timetable to detect affected classes in the disrupted room.", "action": "scan_campus_disruptions", "args": {"room_code": "AI-LAB-01", "day_of_week": "Monday", "start_time": "09:00", "end_time": "11:00"}}'
+            if self.step == 2:
+                return '{"thought": "Execute Google OR-Tools CP-SAT solver to calculate optimal conflict-free room reallocation.", "action": "solve_campus_recovery", "args": {"disrupted_room_code": "AI-LAB-01", "day_of_week": "Monday", "start_time": "09:00", "end_time": "11:00"}}'
+            return '{"thought": "Optimal recovery plan computed and validated.", "final_answer": "AI Lab 01 disruption resolved autonomously via OR-Tools CP-SAT. Course AI501-LAB (Deep Learning Practical, 36 students, Dr. Priya Sharma) is reallocated to AI-LAB-02 (Data Science & NLP Lab, Capacity 42, GPU Workstations) on Monday 09:00-11:00 AM with zero schedule displacement. All 7 hard constraints verified with 100% compliance."}'
+
+        # Standard starter fallback
         if self.step == 1:
             return '{"thought": "See which data files exist.", "action": "list_files", "args": {}}'
         if self.step == 2:

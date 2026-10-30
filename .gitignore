@@ -1,6 +1,29 @@
-.env
+# Environments & Python
 venv/
-.venv/
+backend/venv/
 __pycache__/
 *.pyc
-.ipynb_checkpoints/
+*.pyo
+*.pyd
+.Python
+env/
+.pytest_cache/
+*.egg-info/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+nexora_campus.db
+test_nexora.db
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Credentials & Local Environment
+.env
+.env.local
+*.log
+repo_clone/
